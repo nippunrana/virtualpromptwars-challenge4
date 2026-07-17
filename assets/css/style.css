@@ -560,6 +560,10 @@ button, .btn {
 .form-input:focus {
   border-color: var(--color-accent);
 }
+.form-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.85;
+}
 
 .intercom-result {
   background: rgba(0, 242, 254, 0.05);
