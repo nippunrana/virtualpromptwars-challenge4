@@ -484,12 +484,18 @@ button, .btn {
   margin-top: var(--space-3);
   font-size: var(--text-sm);
   border-left: 2px solid var(--color-gold);
-  color: var(--color-text-primary);
+  color: var(--color-text-primary) !important;
 }
 
-.action-plan-box ul, .action-plan-box ol {
+.action-plan-box ul, 
+.action-plan-box ol {
   margin-left: var(--space-4);
   margin-top: var(--space-2);
+  color: var(--color-text-primary) !important;
+}
+
+.action-plan-box li {
+  color: var(--color-text-primary) !important;
 }
 
 /* Simulation Controls */

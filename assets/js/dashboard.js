@@ -269,17 +269,47 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function formatMarkdown(text) {
         if (!text) return '';
-        // Convert simple markdown list indicators like 1. or - or *
-        let formatted = text
-            .replace(/\n/g, '<br>')
-            .replace(/(\d+\.\s+)(.*?)(?=<br>|$)/g, '<li>$2</li>')
-            .replace(/(-\s+)(.*?)(?=<br>|$)/g, '<li>$2</li>')
-            .replace(/(\*\s+)(.*?)(?=<br>|$)/g, '<li>$2</li>');
+        // Standardize newlines first
+        let normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
         
-        if (formatted.includes('<li>')) {
-            formatted = '<ul style="margin-left: 15px; margin-top: 5px;">' + formatted + '</ul>';
+        // If there are no newlines but there are inline markdown list items (e.g. "* ... * 2. ..."),
+        // let's add newlines before the asterisks or numbers to split them.
+        if (!normalized.includes('\n')) {
+            normalized = normalized.replace(/\s+\*\s+(\d+\.)?/g, '\n* ');
         }
-        return formatted;
+
+        const lines = normalized.split('\n');
+        let html = '';
+        let inList = false;
+        
+        lines.forEach(line => {
+            let cleanLine = line.trim();
+            if (!cleanLine) return;
+            
+            // Match leading bullet or number: * or - or 1. or * 1.
+            const match = cleanLine.match(/^([*\-]\s*|\d+\.\s*)(.*)/);
+            if (match) {
+                if (!inList) {
+                    html += '<ul style="margin-left: 15px; margin-top: 5px; margin-bottom: 5px; padding-left: 0;">';
+                    inList = true;
+                }
+                let itemText = match[2].trim();
+                // Strip nested or leftover bullet indicators
+                itemText = itemText.replace(/^([*\-]\s*|\d+\.\s*)/, '');
+                html += `<li>${itemText}</li>`;
+            } else {
+                if (inList) {
+                    html += '</ul>';
+                    inList = false;
+                }
+                html += `<p style="margin-bottom: 8px;">${cleanLine}</p>`;
+            }
+        });
+        
+        if (inList) {
+            html += '</ul>';
+        }
+        return html;
     }
 
     /**

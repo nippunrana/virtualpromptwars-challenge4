@@ -10,7 +10,7 @@ require_once __DIR__ . '/../config.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArenaNexus - Operations Control Center</title>
-    <link rel="stylesheet" href="../assets/css/style.css?v=1.0.1">
+    <link rel="stylesheet" href="../assets/css/style.css?v=1.0.2">
     <style>
         /* Specific page tweaks for split view dashboard */
         .admin-main {
@@ -235,6 +235,6 @@ require_once __DIR__ . '/../config.php';
     </div>
 
     <!-- Script triggers -->
-    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/dashboard.js?v=1.0.2"></script>
 </body>
 </html>

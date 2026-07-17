@@ -21,7 +21,7 @@ if ($db) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArenaNexus - Fan Companion</title>
-    <link rel="stylesheet" href="../assets/css/style.css?v=1.0.1">
+    <link rel="stylesheet" href="../assets/css/style.css?v=1.0.2">
     <style>
         .nav-tabs {
             display: flex;
@@ -204,6 +204,6 @@ if ($db) {
     </div>
 
     <!-- Script connection -->
-    <script src="../assets/js/fan.js"></script>
+    <script src="../assets/js/fan.js?v=1.0.2"></script>
 </body>
 </html>

@@ -229,11 +229,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseSopToSteps(text) {
         if (!text) return [];
-        // Matches digits followed by dot (e.g. 1.) or -/bullet lists
-        const lines = text.split('\n');
+        // Standardize newlines first
+        let normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+        
+        // If there are no newlines but there are inline markdown list items,
+        // let's add newlines before the asterisks or numbers to split them.
+        if (!normalized.includes('\n')) {
+            normalized = normalized.replace(/\s+\*\s+(\d+\.)?/g, '\n* ');
+        }
+        
+        const lines = normalized.split('\n');
         const steps = [];
         lines.forEach(line => {
-            const clean = line.replace(/^\s*(\d+\.|\*|-)\s*/, '').trim();
+            const clean = line.replace(/^\s*([*\-]\s*|\d+\.\s*)/, '').trim();
             if (clean.length > 3) {
                 steps.push(clean);
             }

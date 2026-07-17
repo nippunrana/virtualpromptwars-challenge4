@@ -21,7 +21,7 @@ if ($db) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArenaNexus - Volunteer Co-Pilot</title>
-    <link rel="stylesheet" href="../assets/css/style.css?v=1.0.1">
+    <link rel="stylesheet" href="../assets/css/style.css?v=1.0.2">
     <style>
         .volunteer-select-bar {
             background: var(--bg-secondary);
@@ -137,6 +137,6 @@ if ($db) {
     </div>
 
     <!-- Script connection -->
-    <script src="../assets/js/volunteer.js"></script>
+    <script src="../assets/js/volunteer.js?v=1.0.2"></script>
 </body>
 </html>
