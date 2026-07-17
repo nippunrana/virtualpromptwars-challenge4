@@ -157,8 +157,8 @@ if ($db) {
                             <span>🥗 Vegetarian</span>
                         </label>
                         <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
-                            <input type="checkbox" id="diet-halal">
-                            <span>🥩 Halal</span>
+                            <input type="checkbox" id="diet-non-veg">
+                            <span>🥩 Non-Veg</span>
                         </label>
                         <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
                             <input type="checkbox" id="diet-gf">

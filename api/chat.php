@@ -27,7 +27,7 @@ try {
     $stmt = $db->query("SELECT name, type, congestion_density, elevator_access, status FROM stadium_zones");
     $zones = $stmt->fetchAll();
     
-    $conStmt = $db->query("SELECT z.name, c.cuisine, c.is_vegan, c.is_vegetarian, c.is_halal, c.is_gluten_free, c.avg_wait_time 
+    $conStmt = $db->query("SELECT z.name, c.cuisine, c.is_vegan, c.is_vegetarian, c.is_non_veg, c.is_gluten_free, c.avg_wait_time 
         FROM concessions c 
         JOIN stadium_zones z ON c.id = z.id");
     $concessions = $conStmt->fetchAll();
@@ -43,7 +43,7 @@ try {
         $diets = [];
         if ($c['is_vegan']) $diets[] = 'Vegan';
         if ($c['is_vegetarian']) $diets[] = 'Vegetarian';
-        if ($c['is_halal']) $diets[] = 'Halal';
+        if ($c['is_non_veg']) $diets[] = 'Non-Veg';
         if ($c['is_gluten_free']) $diets[] = 'Gluten-Free';
         $dietStr = empty($diets) ? 'None' : implode(', ', $diets);
         

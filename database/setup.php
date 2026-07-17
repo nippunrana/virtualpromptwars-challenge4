@@ -15,6 +15,15 @@ try {
     // Enable error outputs
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Drop existing tables to refresh schema
+    $db->exec("DROP TABLE IF EXISTS telemetry_logs CASCADE");
+    $db->exec("DROP TABLE IF EXISTS broadcasts CASCADE");
+    $db->exec("DROP TABLE IF EXISTS incidents CASCADE");
+    $db->exec("DROP TABLE IF EXISTS volunteers CASCADE");
+    $db->exec("DROP TABLE IF EXISTS concessions CASCADE");
+    $db->exec("DROP TABLE IF EXISTS stadium_zones CASCADE");
+    echo "- Old tables dropped for schema refresh.\n";
+
     // Create Table: Stadium Zones
     $db->exec("CREATE TABLE IF NOT EXISTS stadium_zones (
         id VARCHAR(50) PRIMARY KEY,
@@ -26,7 +35,7 @@ try {
         elevator_access BOOLEAN DEFAULT FALSE,
         status VARCHAR(20) DEFAULT 'Normal'
     )");
-    echo "- Table 'stadium_zones' created or exists.\n";
+    echo "- Table 'stadium_zones' created.\n";
 
     // Create Table: Concessions
     $db->exec("CREATE TABLE IF NOT EXISTS concessions (
@@ -34,11 +43,11 @@ try {
         cuisine VARCHAR(100) NOT NULL,
         is_vegan BOOLEAN DEFAULT FALSE,
         is_vegetarian BOOLEAN DEFAULT FALSE,
-        is_halal BOOLEAN DEFAULT FALSE,
+        is_non_veg BOOLEAN DEFAULT FALSE,
         is_gluten_free BOOLEAN DEFAULT FALSE,
         avg_wait_time INT DEFAULT 5
     )");
-    echo "- Table 'concessions' created or exists.\n";
+    echo "- Table 'concessions' created.\n";
 
     // Create Table: Volunteers
     $db->exec("CREATE TABLE IF NOT EXISTS volunteers (
@@ -146,10 +155,10 @@ try {
         ['con_salad', 'Organic Salads & Wraps', true, true, true, true, 5],
         ['con_cafe', 'Coffee & Pastries', true, false, true, true, 4],
         ['con_north', 'Pizza & Hot Dogs', true, false, false, false, 15],
-        ['con_south', 'Halal Kebab & Rice', false, false, true, true, 10]
+        ['con_south', 'Non-Veg Kebab & Rice', false, false, true, true, 10]
     ];
 
-    $insertConcession = $db->prepare("INSERT INTO concessions (id, cuisine, is_vegan, is_vegetarian, is_halal, is_gluten_free, avg_wait_time) 
+    $insertConcession = $db->prepare("INSERT INTO concessions (id, cuisine, is_vegan, is_vegetarian, is_non_veg, is_gluten_free, avg_wait_time) 
         VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO UPDATE SET 
         cuisine = EXCLUDED.cuisine, 
         avg_wait_time = EXCLUDED.avg_wait_time");
@@ -158,7 +167,7 @@ try {
         $mappedConcession = $concession;
         $mappedConcession[2] = $concession[2] ? 1 : 0; // is_vegan
         $mappedConcession[3] = $concession[3] ? 1 : 0; // is_vegetarian
-        $mappedConcession[4] = $concession[4] ? 1 : 0; // is_halal
+        $mappedConcession[4] = $concession[4] ? 1 : 0; // is_non_veg
         $mappedConcession[5] = $concession[5] ? 1 : 0; // is_gluten_free
         $insertConcession->execute($mappedConcession);
     }

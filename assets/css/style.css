@@ -551,7 +551,7 @@ button, .btn {
   background: var(--bg-sunken);
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-lg);
-  color: #ffffff;
+  color: var(--color-text-primary);
   padding: 0.75rem 1rem;
   font-family: var(--font-body);
   outline: none;
@@ -651,7 +651,7 @@ button, .btn {
 }
 .diet-tag.vegan { background: rgba(16, 185, 129, 0.1); color: var(--color-normal); }
 .diet-tag.vegetarian { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-.diet-tag.halal { background: rgba(245, 158, 11, 0.1); color: var(--color-gold); }
+.diet-tag.non-veg { background: rgba(245, 158, 11, 0.1); color: var(--color-gold); }
 .diet-tag.gf { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
 
 /* Route Panel & Chat Box */

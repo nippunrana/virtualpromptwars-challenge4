@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div style="font-weight: 800; font-size: 10px; color: var(--color-gold); margin-bottom: var(--space-1); letter-spacing: 0.05em; text-transform: uppercase;">
                                 Gemini 3.1 Flash-Lite Action SOP
                             </div>
-                            <div style="line-height: 1.4; color: #e5e7eb;">
+                            <div style="line-height: 1.4; color: var(--color-text-primary);">
                                 ${formatMarkdown(actionPlan)}
                             </div>
                         </div>

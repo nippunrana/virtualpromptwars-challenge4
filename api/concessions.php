@@ -13,13 +13,13 @@ if (!$db) {
 // Get query parameters
 $vegan = isset($_GET['vegan']) && ($_GET['vegan'] === 'true' || $_GET['vegan'] == 1);
 $vegetarian = isset($_GET['vegetarian']) && ($_GET['vegetarian'] === 'true' || $_GET['vegetarian'] == 1);
-$halal = isset($_GET['halal']) && ($_GET['halal'] === 'true' || $_GET['halal'] == 1);
+$nonVeg = isset($_GET['non_veg']) && ($_GET['non_veg'] === 'true' || $_GET['non_veg'] == 1);
 $glutenFree = isset($_GET['gluten_free']) && ($_GET['gluten_free'] === 'true' || $_GET['gluten_free'] == 1);
 $maxWait = isset($_GET['max_wait']) ? intval($_GET['max_wait']) : 0;
 
 try {
     $sql = "SELECT c.id, z.name, z.congestion_density, z.status as zone_status, 
-                   c.cuisine, c.is_vegan, c.is_vegetarian, c.is_halal, c.is_gluten_free, c.avg_wait_time 
+                   c.cuisine, c.is_vegan, c.is_vegetarian, c.is_non_veg, c.is_gluten_free, c.avg_wait_time 
             FROM concessions c
             JOIN stadium_zones z ON c.id = z.id
             WHERE 1=1";
@@ -32,8 +32,8 @@ try {
     if ($vegetarian) {
         $sql .= " AND c.is_vegetarian = TRUE";
     }
-    if ($halal) {
-        $sql .= " AND c.is_halal = TRUE";
+    if ($nonVeg) {
+        $sql .= " AND c.is_non_veg = TRUE";
     }
     if ($glutenFree) {
         $sql .= " AND c.is_gluten_free = TRUE";
@@ -53,7 +53,7 @@ try {
     foreach ($results as &$row) {
         $row['is_vegan'] = (bool)$row['is_vegan'];
         $row['is_vegetarian'] = (bool)$row['is_vegetarian'];
-        $row['is_halal'] = (bool)$row['is_halal'];
+        $row['is_non_veg'] = (bool)$row['is_non_veg'];
         $row['is_gluten_free'] = (bool)$row['is_gluten_free'];
     }
 

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Food finder elements
     const checkVegan = document.getElementById('diet-vegan');
     const checkVegetarian = document.getElementById('diet-vegetarian');
-    const checkHalal = document.getElementById('diet-halal');
+    const checkNonVeg = document.getElementById('diet-non-veg');
     const checkGf = document.getElementById('diet-gf');
     const btnSearchFood = document.getElementById('btn-search-food');
     const foodResultsContainer = document.getElementById('food-results-container');
@@ -138,11 +138,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const vegan = checkVegan.checked;
         const vegetarian = checkVegetarian.checked;
-        const halal = checkHalal.checked;
+        const nonVeg = checkNonVeg.checked;
         const gf = checkGf.checked;
 
         try {
-            const response = await fetch(`../api/concessions.php?vegan=${vegan}&vegetarian=${vegetarian}&halal=${halal}&gluten_free=${gf}`);
+            const response = await fetch(`../api/concessions.php?vegan=${vegan}&vegetarian=${vegetarian}&non_veg=${nonVeg}&gluten_free=${gf}`);
             const concessions = await response.json();
 
             if (concessions.length === 0) {
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="diet-tags">
                                 ${c.is_vegan ? '<span class="diet-tag vegan">Vegan</span>' : ''}
                                 ${c.is_vegetarian ? '<span class="diet-tag vegetarian">Veggie</span>' : ''}
-                                ${c.is_halal ? '<span class="diet-tag halal">Halal</span>' : ''}
+                                ${c.is_non_veg ? '<span class="diet-tag non-veg">Non-Veg</span>' : ''}
                                 ${c.is_gluten_free ? '<span class="diet-tag gf">GF</span>' : ''}
                             </div>
                         </div>

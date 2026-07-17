@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS concessions (
     cuisine VARCHAR(100) NOT NULL,
     is_vegan BOOLEAN DEFAULT FALSE,
     is_vegetarian BOOLEAN DEFAULT FALSE,
-    is_halal BOOLEAN DEFAULT FALSE,
+    is_non_veg BOOLEAN DEFAULT FALSE,
     is_gluten_free BOOLEAN DEFAULT FALSE,
     avg_wait_time INT DEFAULT 5 -- minutes
 );

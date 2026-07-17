@@ -9,7 +9,7 @@ Instead of focusing on a single narrow vertical, ArenaNexus 2026 integrates **fi
 1.  **Operational Intelligence (Venue Command Center):** A desktop dashboard streaming live telemetry, mapping crowd congestion, and orchestrating incident response.
 2.  **Multilingual Assistance (Volunteer Co-Pilot):** A mobile web interface for stewards that translates fan inquiries on-the-fly and pulls SOPs.
 3.  **Dynamic Navigation & Accessibility (Fan Companion):** A fan web portal that computes congestion-avoiding and step-free paths (prioritizing elevators/ramps for wheelchair access).
-4.  **Smart Amenities (Dietary Finder):** A concessions tracker filtering food stalls by dietary constraints (Vegan, Halal, Gluten-Free) and wait times.
+4.  **Smart Amenities (Dietary Finder):** A concessions tracker filtering food stalls by dietary constraints (Vegan, Non-Veg, Gluten-Free) and wait times.
 5.  **Smart Logistics (Telemetry Simulator):** A dynamic backend that fluctuates stadium capacity densities, queues, and triggers alerts automatically.
 
 ---
