@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
+
 /**
  * ArenaNexus 2026 Configuration & Initialization
  */
 
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// Error reporting: log to file, never expose to users
+ini_set('display_errors', '0');
+ini_set('display_startup_errors', '0');
+ini_set('log_errors', '1');
 error_reporting(E_ALL);
 
 // Load .env variables if .env exists
@@ -59,11 +62,21 @@ try {
 }
 
 /**
- * Utility function to send JSON responses
+ * Send a JSON HTTP response with security headers and exit.
+ *
+ * @param mixed $data   Data to JSON-encode.
+ * @param int   $status HTTP status code.
+ * @return never
  */
-function sendResponse($data, $status = 200) {
-    header('Content-Type: application/json');
+function sendResponse(mixed $data, int $status = 200): never {
+    // Security headers — applied to every API response
+    header_remove('X-Powered-By');
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: SAMEORIGIN');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    header("Content-Security-Policy: default-src 'none'; frame-ancestors 'none'");
+    header('Content-Type: application/json; charset=utf-8');
     http_response_code($status);
-    echo json_encode($data);
+    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }

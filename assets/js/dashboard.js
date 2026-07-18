@@ -58,35 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Fetch status updates and redraw dashboard elements
+     * Fetch all status updates from the consolidated endpoint and redraw the dashboard.
      */
     async function refreshDashboard() {
         try {
-            // 1. Fetch Zones Status (for SVG map and stats)
-            const zoneResponse = await fetch('../api/route.php?start=transit_metro&end=sec_103'); // generic fetch to read zone table (we can read via simulated endpoint too)
-            // Wait, route.php doesn't give all zones. Let's fetch the zones from triage.php list or write a simple query,
-            // or let's update route.php or just write a small API endpoint if we need to.
-            // Wait! In config.php we can read zones from the database. Let's make sure we have a way to fetch zones.
-            // Let's look at the database zones. We can add a simple GET filter to triage.php or concessions.php, or just create a zones endpoint.
-            // Actually, we can get active incidents and broadcasts. Let's fetch zones by creating a simple script, or let's read the incidents to see who is active.
-            // Let's check how we can fetch zones data. Wait, let's query the database directly or write a small `/api/zones.php` endpoint.
-            // Yes! Writing a small `/api/zones.php` is perfect, clean, and complies with Task-level boundaries.
-            // Let's create `/api/zones.php` next. Let's assume it exists and returns all zones.
-            const responseZones = await fetch('../api/zones.php');
-            const zones = await responseZones.json();
-            
-            updateStadiumMap(zones);
-            updateGlobalStats(zones);
+            // Single consolidated request replaces 3 separate polling calls
+            const response = await fetch('../api/status.php');
+            const data = await response.json();
 
-            // 2. Fetch Incidents
-            const responseIncidents = await fetch('../api/triage.php');
-            const incidents = await responseIncidents.json();
-            updateIncidentList(incidents);
-
-            // 3. Fetch Broadcasts
-            const responseBroadcasts = await fetch('../api/broadcasts.php'); // We'll make this file next too!
-            const broadcasts = await responseBroadcasts.json();
-            updateBroadcastList(broadcasts);
+            updateStadiumMap(data.zones ?? []);
+            updateGlobalStats(data.zones ?? []);
+            updateIncidentList(data.incidents ?? []);
+            updateBroadcastList(data.broadcasts ?? []);
 
         } catch (err) {
             console.error('Dashboard refresh failed:', err);

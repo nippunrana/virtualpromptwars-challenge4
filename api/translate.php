@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * ArenaNexus 2026 AI Translation & Info-Finder Endpoint
  * Translates fan queries contextually using Gemini 3.1 Flash-Lite.
@@ -14,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Read POST JSON input
 $input = json_decode(file_get_contents('php://input'), true);
 
-$lang = isset($input['language']) ? trim(strip_tags($input['language'])) : '';
-$text = isset($input['text']) ? trim(strip_tags($input['text'])) : '';
+$lang = mb_substr(trim(strip_tags($input['language'] ?? '')), 0, 50);
+$text = mb_substr(trim(strip_tags($input['text'] ?? '')), 0, 500);
 
 if (empty($lang) || empty($text)) {
     sendResponse(['error' => 'Missing required fields: language, text'], 400);

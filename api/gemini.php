@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * ArenaNexus 2026 Gemini AI API Helper
  */
@@ -6,18 +8,23 @@
 require_once __DIR__ . '/../config.php';
 
 class GeminiClient {
-    private $apiKey;
-    private $model = 'gemini-3.1-flash-lite';
-    private $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/';
+    private string $apiKey;
+    private string $model = 'gemini-3.1-flash-lite';
+    private string $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/';
 
     public function __construct() {
         $this->apiKey = defined('GEMINI_API_KEY') ? GEMINI_API_KEY : '';
     }
 
     /**
-     * Generate content from Gemini API (with simulated fallback if no API key is set)
+     * Generate content from Gemini API (with simulated fallback if no API key is set).
+     *
+     * @param string      $prompt            The user prompt text.
+     * @param string      $systemInstruction Optional system instruction for the model.
+     * @param array|null  $jsonSchema        Optional JSON schema for structured output.
+     * @return string AI-generated response text.
      */
-    public function generateContent($prompt, $systemInstruction = '', $jsonSchema = null) {
+    public function generateContent(string $prompt, string $systemInstruction = '', ?array $jsonSchema = null): string {
         if (empty($this->apiKey)) {
             // Simulated Fallback Mode
             return $this->getSimulatedResponse($prompt, $jsonSchema);

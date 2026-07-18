@@ -1,10 +1,22 @@
 <?php
+declare(strict_types=1);
+
 /**
  * ArenaNexus 2026 Router Core
  * Dijkstra implementation separated for unit testing.
  */
 
-function calculateRoute($start, $end, $stepFree, $graph, $zoneData) {
+/**
+ * Calculate the optimal route between two zones using Dijkstra's algorithm.
+ *
+ * @param string  $start    Starting zone ID.
+ * @param string  $end      Destination zone ID.
+ * @param bool    $stepFree Whether to enforce step-free (elevator) routing.
+ * @param array   $graph    Adjacency list: [ zone_id => [ neighbor_id => base_weight ] ].
+ * @param array   $zoneData Zone metadata keyed by zone ID.
+ * @return array<string>|null Ordered list of zone IDs forming the path, or null if unreachable.
+ */
+function calculateRoute(string $start, string $end, bool $stepFree, array $graph, array $zoneData): ?array {
     $distances = [];
     $previous = [];
     $queue = new class extends SplPriorityQueue {

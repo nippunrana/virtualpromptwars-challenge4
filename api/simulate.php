@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * ArenaNexus 2026 Match Telemetry Simulator
  * Simulates real-time crowd dynamics, congestion updates, and incident generation.

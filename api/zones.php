@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * ArenaNexus 2026 Zones Telemetry API
  */

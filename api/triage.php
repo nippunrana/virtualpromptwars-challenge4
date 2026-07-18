@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * ArenaNexus 2026 Incident Parser & AI Triage Engine
  * Triages reported incidents using Gemini 3.1 Flash-Lite structured JSON outputs.
@@ -7,8 +9,14 @@
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/gemini.php';
 
-// Direct execution helper (also callable internally by simulate.php)
-function triageIncidentDirectly($incidentId, $db) {
+/**
+ * Triage an incident by ID using Gemini AI.
+ *
+ * @param int  $incidentId The incident row ID to triage.
+ * @param PDO  $db         Active database connection.
+ * @return bool True on success, false on failure.
+ */
+function triageIncidentDirectly(int $incidentId, PDO $db): bool {
     try {
         // 1. Fetch incident details
         $stmt = $db->prepare("SELECT i.id, i.type, i.description, i.zone_id, z.name as zone_name 
@@ -162,11 +170,11 @@ if (basename($_SERVER['PHP_SELF']) === 'triage.php') {
         // Read JSON input
         $input = json_decode(file_get_contents('php://input') ?: '{}', true);
         
-        // Fallback to $_POST
-        $type = isset($input['type']) ? trim(strip_tags($input['type'])) : (isset($_POST['type']) ? trim(strip_tags($_POST['type'])) : '');
-        $reportedBy = isset($input['reported_by']) ? trim(strip_tags($input['reported_by'])) : (isset($_POST['reported_by']) ? trim(strip_tags($_POST['reported_by'])) : 'sensor');
-        $zoneId = isset($input['zone_id']) ? trim(strip_tags($input['zone_id'])) : (isset($_POST['zone_id']) ? trim(strip_tags($_POST['zone_id'])) : '');
-        $description = isset($input['description']) ? trim(strip_tags($input['description'])) : (isset($_POST['description']) ? trim(strip_tags($_POST['description'])) : '');
+        // Fallback to $_POST, with sanitization and length limits
+        $type        = mb_substr(trim(strip_tags($input['type']        ?? $_POST['type']        ?? '')), 0, 100);
+        $reportedBy  = mb_substr(trim(strip_tags($input['reported_by'] ?? $_POST['reported_by'] ?? 'sensor')), 0, 100);
+        $zoneId      = mb_substr(trim(strip_tags($input['zone_id']     ?? $_POST['zone_id']     ?? '')), 0, 100);
+        $description = mb_substr(trim(strip_tags($input['description'] ?? $_POST['description'] ?? '')), 0, 1000);
 
         if (empty($type) || empty($zoneId) || empty($description)) {
             sendResponse(['error' => 'Missing required fields: type, zone_id, description'], 400);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * ArenaNexus 2026 Dynamic Router API
  * Finds optimal path between zones avoiding congestion and respect accessibility settings,

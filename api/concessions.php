@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * ArenaNexus 2026 Concessions Finder API
  * Searches and filters food concessions by wait time and dietary tags.

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * ArenaNexus 2026 Fan Assistant Chatbot API
  * Uses Gemini 3.1 Flash-Lite grounded in live PostgreSQL telemetry.
@@ -11,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     sendResponse(['error' => 'Only POST requests allowed'], 405);
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
-$message = isset($input['message']) ? trim(strip_tags($input['message'])) : '';
+$input = json_decode(file_get_contents('php://input') ?: '{}', true) ?? [];
+$message = mb_substr(trim(strip_tags($input['message'] ?? '')), 0, 500);
 
 if (empty($message)) {
     sendResponse(['error' => 'Missing message parameter'], 400);
