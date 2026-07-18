@@ -53,7 +53,7 @@ require_once __DIR__ . '/../config.php';
             <div>
                 <div class="admin-header">
                     <a href="../index.php" style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 20px;">🛡️</span>
+                        <span style="font-size: 20px;" aria-hidden="true">🛡️</span>
                         <h2 style="font-size: var(--text-lg); text-transform: uppercase; color: var(--color-text-primary);">ArenaNexus</h2>
                     </a>
                     <div style="font-size: 10px; color: var(--color-gold); font-weight: 800; letter-spacing: 0.1em; margin-top: 4px;">
@@ -61,15 +61,15 @@ require_once __DIR__ . '/../config.php';
                     </div>
                 </div>
 
-                <nav>
+                <nav aria-label="Operations Navigation">
                     <a href="#" class="admin-nav-item active">
-                        <span>📊</span> Control Dashboard
+                        <span aria-hidden="true">📊</span> Control Dashboard
                     </a>
                     <a href="../volunteer/index.php" class="admin-nav-item">
-                        <span>🤝</span> Volunteer Portal
+                        <span aria-hidden="true">🤝</span> Volunteer Portal
                     </a>
                     <a href="../fan/index.php" class="admin-nav-item">
-                        <span>🎟️</span> Fan Companion
+                        <span aria-hidden="true">🎟️</span> Fan Companion
                     </a>
                 </nav>
             </div>
@@ -90,7 +90,7 @@ require_once __DIR__ . '/../config.php';
                 </div>
                 <div class="sim-controls">
                     <button class="btn btn-primary" id="btn-tick">
-                        ⚡ Simulate Match Tick
+                        <span aria-hidden="true">⚡</span> Simulate Match Tick
                     </button>
                 </div>
             </header>
@@ -131,51 +131,51 @@ require_once __DIR__ . '/../config.php';
                             <rect x="10" y="10" width="580" height="580" rx="30" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2" />
                             
                             <!-- Transit Nodes (Corners) -->
-                            <circle class="stadium-zone-path" id="transit_metro" cx="50" cy="50" r="30" data-name="Metro Stadium Station" />
+                            <circle class="stadium-zone-path" id="transit_metro" cx="50" cy="50" r="30" data-name="Metro Stadium Station" tabindex="0" role="button" aria-label="Metro Stadium Station" />
                             <text x="50" y="55" fill="#fff" font-size="9" text-anchor="middle" font-family="sans-serif" pointer-events="none">METRO</text>
                             
-                            <circle class="stadium-zone-path" id="transit_shuttle" cx="550" cy="50" r="30" data-name="Shuttle Bus Hub" />
+                            <circle class="stadium-zone-path" id="transit_shuttle" cx="550" cy="50" r="30" data-name="Shuttle Bus Hub" tabindex="0" role="button" aria-label="Shuttle Bus Hub" />
                             <text x="550" y="55" fill="#fff" font-size="9" text-anchor="middle" font-family="sans-serif" pointer-events="none">BUS</text>
 
-                            <circle class="stadium-zone-path" id="transit_valet" cx="50" cy="550" r="30" data-name="VIP Valet Parking" />
+                            <circle class="stadium-zone-path" id="transit_valet" cx="50" cy="550" r="30" data-name="VIP Valet Parking" tabindex="0" role="button" aria-label="VIP Valet Parking" />
                             <text x="50" y="555" fill="#fff" font-size="9" text-anchor="middle" font-family="sans-serif" pointer-events="none">VALET</text>
 
-                            <circle class="stadium-zone-path" id="transit_rideshare" cx="550" cy="550" r="30" data-name="Rideshare Drop-off Zone" />
+                            <circle class="stadium-zone-path" id="transit_rideshare" cx="550" cy="550" r="30" data-name="Rideshare Drop-off Zone" tabindex="0" role="button" aria-label="Rideshare Drop-off Zone" />
                             <text x="550" y="555" fill="#fff" font-size="9" text-anchor="middle" font-family="sans-serif" pointer-events="none">RIDE</text>
 
                             <!-- Stadium Ring structure (Gates A-F) -->
                             <circle cx="300" cy="300" r="210" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="40" />
                             
                             <!-- Gates as segments on the outer circle -->
-                            <path class="stadium-zone-path" id="gate_a" d="M 450 300 A 150 150 0 0 0 375 170" fill="none" stroke-width="20" data-name="Gate A" />
+                            <path class="stadium-zone-path" id="gate_a" d="M 450 300 A 150 150 0 0 0 375 170" fill="none" stroke-width="20" data-name="Gate A" tabindex="0" role="button" aria-label="Gate A" />
                             <text x="430" y="240" fill="#fff" font-size="10" font-family="sans-serif" pointer-events="none">Gate A</text>
 
-                            <path class="stadium-zone-path" id="gate_b" d="M 375 170 A 150 150 0 0 0 225 170" fill="none" stroke-width="20" data-name="Gate B" />
+                            <path class="stadium-zone-path" id="gate_b" d="M 375 170 A 150 150 0 0 0 225 170" fill="none" stroke-width="20" data-name="Gate B" tabindex="0" role="button" aria-label="Gate B" />
                             <text x="300" y="145" fill="#fff" font-size="10" text-anchor="middle" font-family="sans-serif" pointer-events="none">Gate B</text>
 
-                            <path class="stadium-zone-path" id="gate_c" d="M 225 170 A 150 150 0 0 0 150 300" fill="none" stroke-width="20" data-name="Gate C (ADA)" />
+                            <path class="stadium-zone-path" id="gate_c" d="M 225 170 A 150 150 0 0 0 150 300" fill="none" stroke-width="20" data-name="Gate C (ADA)" tabindex="0" role="button" aria-label="Gate C (Accessibility)" />
                             <text x="170" y="240" fill="#fff" font-size="10" text-anchor="end" font-family="sans-serif" pointer-events="none">Gate C</text>
 
-                            <path class="stadium-zone-path" id="gate_d" d="M 150 300 A 150 150 0 0 0 225 430" fill="none" stroke-width="20" data-name="Gate D" />
+                            <path class="stadium-zone-path" id="gate_d" d="M 150 300 A 150 150 0 0 0 225 430" fill="none" stroke-width="20" data-name="Gate D" tabindex="0" role="button" aria-label="Gate D" />
                             <text x="170" y="370" fill="#fff" font-size="10" text-anchor="end" font-family="sans-serif" pointer-events="none">Gate D</text>
 
-                            <path class="stadium-zone-path" id="gate_e" d="M 225 430 A 150 150 0 0 0 375 430" fill="none" stroke-width="20" data-name="Gate E" />
+                            <path class="stadium-zone-path" id="gate_e" d="M 225 430 A 150 150 0 0 0 375 430" fill="none" stroke-width="20" data-name="Gate E" tabindex="0" role="button" aria-label="Gate E" />
                             <text x="300" y="465" fill="#fff" font-size="10" text-anchor="middle" font-family="sans-serif" pointer-events="none">Gate E</text>
 
-                            <path class="stadium-zone-path" id="gate_f" d="M 375 430 A 150 150 0 0 0 450 300" fill="none" stroke-width="20" data-name="Gate F" />
+                            <path class="stadium-zone-path" id="gate_f" d="M 375 430 A 150 150 0 0 0 450 300" fill="none" stroke-width="20" data-name="Gate F" tabindex="0" role="button" aria-label="Gate F" />
                             <text x="430" y="370" fill="#fff" font-size="10" font-family="sans-serif" pointer-events="none">Gate F</text>
 
                             <!-- Internal Bowl Sections -->
-                            <rect class="stadium-zone-path" id="sec_101" x="340" y="250" width="70" height="50" rx="4" data-name="Section 101" />
+                            <rect class="stadium-zone-path" id="sec_101" x="340" y="250" width="70" height="50" rx="4" data-name="Section 101" tabindex="0" role="button" aria-label="Section 101" />
                             <text x="375" y="280" fill="#fff" font-size="8" text-anchor="middle" pointer-events="none">Sec 101</text>
 
-                            <rect class="stadium-zone-path" id="sec_102" x="265" y="210" width="70" height="50" rx="4" data-name="Section 102" />
+                            <rect class="stadium-zone-path" id="sec_102" x="265" y="210" width="70" height="50" rx="4" data-name="Section 102" tabindex="0" role="button" aria-label="Section 102" />
                             <text x="300" y="240" fill="#fff" font-size="8" text-anchor="middle" pointer-events="none">Sec 102</text>
 
-                            <rect class="stadium-zone-path" id="sec_103" x="190" y="250" width="70" height="50" rx="4" data-name="Section 103 (ADA)" />
+                            <rect class="stadium-zone-path" id="sec_103" x="190" y="250" width="70" height="50" rx="4" data-name="Section 103 (ADA)" tabindex="0" role="button" aria-label="Section 103 (Accessibility)" />
                             <text x="225" y="280" fill="#fff" font-size="8" text-anchor="middle" pointer-events="none">Sec 103</text>
 
-                            <rect class="stadium-zone-path" id="sec_104" x="265" y="340" width="70" height="50" rx="4" data-name="Section 104" />
+                            <rect class="stadium-zone-path" id="sec_104" x="265" y="340" width="70" height="50" rx="4" data-name="Section 104" tabindex="0" role="button" aria-label="Section 104" />
                             <text x="300" y="370" fill="#fff" font-size="8" text-anchor="middle" pointer-events="none">Sec 104</text>
                             
                             <!-- Inner Pitch (Center visual) -->
@@ -206,9 +206,9 @@ require_once __DIR__ . '/../config.php';
                     <div class="glass-panel">
                         <div class="flex-between" style="margin-bottom: var(--space-4);">
                             <h3 style="font-size: var(--text-base);">Active Incidents Feed (AI Triaged)</h3>
-                            <span class="badge badge-normal" id="lbl-inc-count">0 Open</span>
+                            <span class="badge badge-normal" id="lbl-inc-count" aria-live="polite">0 Open</span>
                         </div>
-                        <div class="incident-list" id="incident-container">
+                        <div class="incident-list" id="incident-container" aria-live="polite">
                             <p style="text-align: center; color: var(--color-text-muted); font-size: var(--text-sm); padding: var(--space-5);">
                                 Monitoring telemetry streams. No active incidents.
                             </p>
@@ -221,7 +221,7 @@ require_once __DIR__ . '/../config.php';
                             <h3 style="font-size: var(--text-base);">Live Broadcast Queue</h3>
                             <span style="font-size: 10px; color: var(--color-accent); font-weight: 800;">AUTO-TRANSLATED</span>
                         </div>
-                        <div class="broadcast-list" id="broadcast-container">
+                        <div class="broadcast-list" id="broadcast-container" aria-live="polite">
                             <p style="text-align: center; color: var(--color-text-muted); font-size: var(--text-sm); padding: var(--space-5);">
                                 No warnings currently broadcasted in the venue.
                             </p>

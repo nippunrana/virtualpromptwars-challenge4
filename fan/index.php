@@ -67,13 +67,13 @@ if ($db) {
         <!-- Header -->
         <header class="mobile-header flex-between">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 18px;">🎟️</span>
+                <span style="font-size: 18px;" aria-hidden="true">🎟️</span>
                 <div>
                     <h1 style="font-size: var(--text-base); line-height: 1.2;">Fan Companion</h1>
                     <span style="font-size: 8px; color: var(--color-accent); font-weight: 800; letter-spacing: 0.15em;">FIFA 2026 SPECTATOR NET</span>
                 </div>
             </div>
-            <a href="../index.php" style="font-size: var(--text-xs); color: var(--color-text-muted);">Exit</a>
+            <a href="../index.php" style="font-size: var(--text-xs); color: var(--text-muted);">Exit</a>
         </header>
 
         <!-- Scrollable Content -->
@@ -81,9 +81,9 @@ if ($db) {
             
             <!-- Navigation Tabs -->
             <div class="nav-tabs">
-                <button class="tab-btn active" id="tab-nav">🗺️ Wayfinding</button>
-                <button class="tab-btn" id="tab-food">🍔 Food Finder</button>
-                <button class="tab-btn" id="tab-chat">💬 Assist Bot</button>
+                <button class="tab-btn active" id="tab-nav"><span aria-hidden="true">🗺️</span> Wayfinding</button>
+                <button class="tab-btn" id="tab-food"><span aria-hidden="true">🍔</span> Food Finder</button>
+                <button class="tab-btn" id="tab-chat"><span aria-hidden="true">💬</span> Assist Bot</button>
             </div>
 
             <!-- TAB 1: WAYFINDING PANEL -->
@@ -93,7 +93,7 @@ if ($db) {
                     
                     <div style="display: flex; flex-direction: column; gap: var(--space-3);">
                         <div>
-                            <label style="display: block; font-size: 10px; color: var(--color-text-secondary); margin-bottom: 4px; text-transform: uppercase;">Start Location</label>
+                            <label for="route-start" style="display: block; font-size: 10px; color: var(--color-text-secondary); margin-bottom: 4px; text-transform: uppercase;">Start Location</label>
                             <select class="form-input" id="route-start" style="width: 100%;">
                                 <option value="">-- Select Zone --</option>
                                 <?php foreach ($zones as $zone): ?>
@@ -103,7 +103,7 @@ if ($db) {
                         </div>
 
                         <div>
-                            <label style="display: block; font-size: 10px; color: var(--color-text-secondary); margin-bottom: 4px; text-transform: uppercase;">Destination</label>
+                            <label for="route-end" style="display: block; font-size: 10px; color: var(--color-text-secondary); margin-bottom: 4px; text-transform: uppercase;">Destination</label>
                             <select class="form-input" id="route-end" style="width: 100%;">
                                 <option value="">-- Select Zone --</option>
                                 <?php foreach ($zones as $zone): ?>
@@ -112,7 +112,7 @@ if ($db) {
                             </select>
                         </div>
 
-                        <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer; margin-top: 4px;">
+                        <label for="route-step-free" style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer; margin-top: 4px;">
                             <input type="checkbox" id="route-step-free">
                             <span>Step-Free Route Only (Elevators/Ramps)</span>
                         </label>
@@ -124,7 +124,7 @@ if ($db) {
                 </div>
 
                 <!-- Wayfinding Results Container -->
-                <div class="glass-panel" id="route-result-container" style="display: none; margin-top: var(--space-4); border-color: var(--color-accent);">
+                <div class="glass-panel" id="route-result-container" style="display: none; margin-top: var(--space-4); border-color: var(--color-accent);" aria-live="polite">
                     <h4 style="font-size: var(--text-xs); color: var(--color-accent); font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: var(--space-2);">
                         Calculated Wayfinder Guidance
                     </h4>
@@ -148,19 +148,19 @@ if ($db) {
 
                     <!-- Dietary Filters -->
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
-                        <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
+                        <label for="diet-vegan" style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
                             <input type="checkbox" id="diet-vegan">
                             <span>🌱 Vegan</span>
                         </label>
-                        <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
+                        <label for="diet-vegetarian" style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
                             <input type="checkbox" id="diet-vegetarian">
                             <span>🥗 Vegetarian</span>
                         </label>
-                        <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
+                        <label for="diet-non-veg" style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
                             <input type="checkbox" id="diet-non-veg">
                             <span>🥩 Non-Veg</span>
                         </label>
-                        <label style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
+                        <label for="diet-gf" style="display: inline-flex; align-items: center; gap: 8px; font-size: var(--text-xs); color: var(--color-text-secondary); cursor: pointer;">
                             <input type="checkbox" id="diet-gf">
                             <span>🌾 Gluten-Free</span>
                         </label>
@@ -172,7 +172,7 @@ if ($db) {
                 </div>
 
                 <!-- Food Results Container -->
-                <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);" id="food-results-container"></div>
+                <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);" id="food-results-container" aria-live="polite"></div>
             </div>
 
             <!-- TAB 3: STADIUM ASSIST BOT -->
@@ -180,13 +180,14 @@ if ($db) {
                 <div class="glass-panel" style="display: flex; flex-direction: column; gap: var(--space-3);">
                     <h3 style="font-size: var(--text-sm);">GenAI Grounded Assist Bot</h3>
                     
-                    <div class="chat-container" id="chat-window">
+                    <div class="chat-container" id="chat-window" aria-live="polite">
                         <div class="chat-bubble bot">
                             Hi! I am your AI Stadium Assistant. I have live access to bathroom lines, concession wait times, and gate traffic. Ask me anything! (e.g. "Where can I get vegan food with the shortest line?")
                         </div>
                     </div>
 
                     <div class="intercom-input-wrapper">
+                        <label for="chat-input" class="sr-only">Ask a stadium operation question</label>
                         <input type="text" class="form-input" id="chat-input" placeholder="Ask a question...">
                         <button class="btn btn-accent" id="btn-send-chat" style="padding: 0.75rem 1rem;">
                             Send
@@ -199,7 +200,7 @@ if ($db) {
 
         <!-- Sticky Footer Status -->
         <div class="mobile-nav" style="border-top: 1px solid var(--border-glass); padding: 0 var(--space-4); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--color-text-secondary);">
-            <div id="fan-footer-status">🏟️ Welcome to ArenaNexus • Enjoy the Match!</div>
+            <div id="fan-footer-status" aria-live="polite">🏟️ Welcome to ArenaNexus • Enjoy the Match!</div>
         </div>
     </div>
 

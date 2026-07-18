@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="assets/css/style.css?v=1.0.2">
 </head>
 <body class="ticket-portal">
-    <div class="ticket-wrapper">
+    <main class="ticket-wrapper">
+        <h1 class="sr-only">ArenaNexus 2026 - Stadium Operations Platform Entrance</h1>
         <div class="ticket">
             <!-- Ticket Main Section -->
             <div class="ticket-main">
@@ -59,7 +60,7 @@
                 <div style="text-align: center; width: 100%;">
                     <div class="ticket-meta-label" style="margin-bottom: var(--space-3);">SELECT INTERFACE</div>
                     
-                    <div class="ticket-choices">
+                    <nav class="ticket-choices" aria-label="Portal interfaces">
                         <a href="admin/index.php" class="btn btn-accent ticket-choice-btn">
                             Ops Command
                         </a>
@@ -69,7 +70,7 @@
                         <a href="fan/index.php" class="btn btn-secondary ticket-choice-btn">
                             Fan Companion
                         </a>
-                    </div>
+                    </nav>
                 </div>
 
                 <div class="barcode-container">
@@ -80,6 +81,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

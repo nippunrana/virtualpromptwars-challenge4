@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $input = json_decode(file_get_contents('php://input'), true);
-$message = isset($input['message']) ? trim($input['message']) : '';
+$message = isset($input['message']) ? trim(strip_tags($input['message'])) : '';
 
 if (empty($message)) {
     sendResponse(['error' => 'Missing message parameter'], 400);

@@ -19,6 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set polling interval for updates (every 5 seconds)
     const updateInterval = setInterval(refreshDashboard, 5000);
 
+    // Keyboard support for interactive SVG map paths
+    document.querySelectorAll('.stadium-zone-path').forEach(path => {
+        path.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                path.click();
+            }
+        });
+    });
+
     // Click: Manual Simulation Tick
     if (btnTick) {
         btnTick.addEventListener('click', async () => {
@@ -104,8 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     svgPath.classList.add('zone-normal');
                 }
 
-                // Add tooltips
+                // Add tooltips and accessibility labels
                 svgPath.setAttribute('title', `${zone.name}: ${zone.congestion_density}% capacity`);
+                svgPath.setAttribute('aria-label', `${zone.name}: ${zone.congestion_density}% congestion capacity, status: ${zone.status}`);
             }
         });
     }
@@ -170,13 +181,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         </span>
                         <span style="font-size: var(--text-xs); color: var(--color-text-muted);">${timeStr} | ${statusLabel}</span>
                     </div>
-                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--color-text-primary); margin-bottom: var(--space-1);">${inc.zone_name}</h4>
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--color-text-primary); margin-bottom: var(--space-1);">${escapeHTML(inc.zone_name)}</h4>
                     <p style="font-size: var(--text-xs); line-height: 1.4; color: var(--color-text-secondary); margin-bottom: var(--space-3);">
-                        "${inc.description}"
+                        "${escapeHTML(inc.description)}"
                     </p>
                     
                     <div style="font-size: var(--text-xs); margin-bottom: var(--space-3);">
-                        <span style="color: var(--color-gold); font-weight: 700;">Assigned Crew:</span> ${volunteerName}
+                        <span style="color: var(--color-gold); font-weight: 700;">Assigned Crew:</span> ${escapeHTML(volunteerName)}
                     </div>
 
                     ${actionPlan ? `
@@ -253,9 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         Broadcast ID: ${bc.id}
                     </div>
                     <div style="font-size: var(--text-xs); line-height: 1.4; display: flex; flex-direction: column; gap: 4px;">
-                        <div><strong style="color: var(--color-accent);">EN:</strong> <span style="color: var(--color-text-primary);">${bc.message_en}</span></div>
-                        ${bc.message_es ? `<div><strong style="color: var(--color-gold);">ES:</strong> <span style="color: var(--color-text-secondary);">${bc.message_es}</span></div>` : ''}
-                        ${bc.message_fr ? `<div><strong style="color: #a855f7;">FR:</strong> <span style="color: var(--color-text-secondary);">${bc.message_fr}</span></div>` : ''}
+                        <div><strong style="color: var(--color-accent);">EN:</strong> <span style="color: var(--color-text-primary);">${escapeHTML(bc.message_en)}</span></div>
+                        ${bc.message_es ? `<div><strong style="color: var(--color-gold);">ES:</strong> <span style="color: var(--color-text-secondary);">${escapeHTML(bc.message_es)}</span></div>` : ''}
+                        ${bc.message_fr ? `<div><strong style="color: #a855f7;">FR:</strong> <span style="color: var(--color-text-secondary);">${escapeHTML(bc.message_fr)}</span></div>` : ''}
                     </div>
                 </div>
             `;
@@ -296,13 +307,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 let itemText = match[2].trim();
                 // Strip nested or leftover bullet indicators
                 itemText = itemText.replace(/^([*\-]\s*|\d+\.\s*)/, '');
-                html += `<li>${itemText}</li>`;
+                html += `<li>${escapeHTML(itemText)}</li>`;
             } else {
                 if (inList) {
                     html += '</ul>';
                     inList = false;
                 }
-                html += `<p style="margin-bottom: 8px;">${cleanLine}</p>`;
+                html += `<p style="margin-bottom: 8px;">${escapeHTML(cleanLine)}</p>`;
             }
         });
         
@@ -339,5 +350,18 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.style.transition = 'opacity 0.5s ease';
             setTimeout(() => toast.remove(), 500);
         }, 4000);
+    }
+
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag)
+        );
     }
 });

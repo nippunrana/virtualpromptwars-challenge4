@@ -39,8 +39,11 @@ if ($db) {
             border: 1px solid var(--border-glass);
             padding: var(--space-2) var(--space-3);
             border-radius: var(--radius-md);
-            outline: none;
             font-size: var(--text-sm);
+        }
+        .v-select:focus {
+            outline: 3px solid var(--color-gold);
+            outline-offset: 2px;
         }
     </style>
 </head>
@@ -50,7 +53,7 @@ if ($db) {
         <!-- Header -->
         <header class="mobile-header flex-between">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="font-size: 18px;">🤝</span>
+                <span style="font-size: 18px;" aria-hidden="true">🤝</span>
                 <div>
                     <h1 style="font-size: var(--text-base); line-height: 1.2;">Volunteer Co-Pilot</h1>
                     <span style="font-size: 8px; color: var(--color-gold); font-weight: 800; letter-spacing: 0.15em;">FIFA 2026 GROUND NETWORK</span>
@@ -64,7 +67,7 @@ if ($db) {
             
             <!-- Volunteer Selector -->
             <div class="volunteer-select-bar">
-                <span style="font-size: var(--text-xs); font-weight: 700; color: var(--color-text-secondary);">Select Profile:</span>
+                <label for="volunteer-selector" style="font-size: var(--text-xs); font-weight: 700; color: var(--color-text-secondary);">Select Profile:</label>
                 <select class="v-select" id="volunteer-selector">
                     <option value="">-- Choose Profile --</option>
                     <?php foreach ($volunteers as $v): ?>
@@ -86,7 +89,7 @@ if ($db) {
             <!-- Assigned Tasks Section -->
             <div class="glass-panel task-card" id="task-panel">
                 <h3 style="font-size: var(--text-sm); margin-bottom: var(--space-3);">Your Assigned Tasks</h3>
-                <div id="task-details-container">
+                <div id="task-details-container" aria-live="polite">
                     <p style="text-align: center; color: var(--color-text-muted); font-size: var(--text-xs); padding: var(--space-4);">
                         Please select a profile to synchronize task dispatching.
                     </p>
@@ -102,7 +105,7 @@ if ($db) {
                 
                 <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                     <div style="display: flex; gap: var(--space-2); align-items: center;">
-                        <span style="font-size: var(--text-xs); color: var(--color-text-muted);">From Fan Lang:</span>
+                        <label for="translation-lang" style="font-size: var(--text-xs); color: var(--color-text-muted);">From Fan Lang:</label>
                         <select class="v-select" id="translation-lang" style="padding: 0.35rem 0.5rem; font-size: var(--text-xs);">
                             <option value="Spanish">Spanish (Español)</option>
                             <option value="French">French (Français)</option>
@@ -113,6 +116,7 @@ if ($db) {
                     </div>
 
                     <div class="intercom-input-wrapper">
+                        <label for="inquiry-input" class="sr-only">Enter fan query to translate</label>
                         <input type="text" class="form-input" id="inquiry-input" placeholder="e.g. ¿Dónde están los baños accesibles?">
                         <button class="btn btn-accent" id="btn-translate" style="padding: 0.75rem 1rem;">
                             Translate
@@ -120,7 +124,7 @@ if ($db) {
                     </div>
                 </div>
 
-                <div class="intercom-result" id="intercom-result-container" style="display: none;">
+                <div class="intercom-result" id="intercom-result-container" style="display: none;" aria-live="polite">
                     <div style="font-weight: 800; font-size: 9px; color: var(--color-accent); letter-spacing: 0.05em; margin-bottom: var(--space-1); text-transform: uppercase;">
                         Gemini Multi-lingual Output
                     </div>
@@ -132,7 +136,7 @@ if ($db) {
 
         <!-- Sticky Status Footer / Warnings -->
         <div class="mobile-nav" style="border-top: 1px solid var(--border-glass); padding: 0 var(--space-4); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--color-text-secondary);">
-            <div id="footer-status">🟢 Standing By • GPS Synchronized</div>
+            <div id="footer-status" aria-live="polite">🟢 Standing By • GPS Synchronized</div>
         </div>
     </div>
 

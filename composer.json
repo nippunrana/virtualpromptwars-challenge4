@@ -1,0 +1,13 @@
+{
+    "name": "arenanexus/stadium-operations",
+    "description": "FIFA World Cup 2026 Stadium Operations Platform",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload-dev": {
+        "classmap": [
+            "api/"
+        ]
+    }
+}

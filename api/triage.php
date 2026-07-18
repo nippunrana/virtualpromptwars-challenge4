@@ -98,7 +98,11 @@ function triageIncidentDirectly($incidentId, $db) {
         }
 
         // 5. Update Database
-        $db->beginTransaction();
+        $startedTransaction = false;
+        if (!$db->inTransaction()) {
+            $db->beginTransaction();
+            $startedTransaction = true;
+        }
 
         // Update Incident status, severity, assigned volunteer, and AI analysis json
         $updateInc = $db->prepare("UPDATE incidents SET 
@@ -137,11 +141,13 @@ function triageIncidentDirectly($incidentId, $db) {
             $aiData['broadcast_fr']
         ]);
 
-        $db->commit();
+        if ($startedTransaction && $db->inTransaction()) {
+            $db->commit();
+        }
         return true;
 
     } catch (Exception $e) {
-        if ($db->inTransaction()) {
+        if ($startedTransaction && $db->inTransaction()) {
             $db->rollBack();
         }
         error_log("Error during incident triage: " . $e->getMessage());
@@ -157,10 +163,10 @@ if (basename($_SERVER['PHP_SELF']) === 'triage.php') {
         $input = json_decode(file_get_contents('php://input') ?: '{}', true);
         
         // Fallback to $_POST
-        $type = isset($input['type']) ? $input['type'] : (isset($_POST['type']) ? $_POST['type'] : '');
-        $reportedBy = isset($input['reported_by']) ? $input['reported_by'] : (isset($_POST['reported_by']) ? $_POST['reported_by'] : 'sensor');
-        $zoneId = isset($input['zone_id']) ? $input['zone_id'] : (isset($_POST['zone_id']) ? $_POST['zone_id'] : '');
-        $description = isset($input['description']) ? $input['description'] : (isset($_POST['description']) ? $_POST['description'] : '');
+        $type = isset($input['type']) ? trim(strip_tags($input['type'])) : (isset($_POST['type']) ? trim(strip_tags($_POST['type'])) : '');
+        $reportedBy = isset($input['reported_by']) ? trim(strip_tags($input['reported_by'])) : (isset($_POST['reported_by']) ? trim(strip_tags($_POST['reported_by'])) : 'sensor');
+        $zoneId = isset($input['zone_id']) ? trim(strip_tags($input['zone_id'])) : (isset($_POST['zone_id']) ? trim(strip_tags($_POST['zone_id'])) : '');
+        $description = isset($input['description']) ? trim(strip_tags($input['description'])) : (isset($_POST['description']) ? trim(strip_tags($_POST['description'])) : '');
 
         if (empty($type) || empty($zoneId) || empty($description)) {
             sendResponse(['error' => 'Missing required fields: type, zone_id, description'], 400);

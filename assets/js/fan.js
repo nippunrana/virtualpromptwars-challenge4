@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="route-step-pill">
                             <span style="font-size: 14px;">${elevatorIcon}</span>
                             <div style="flex: 1;">
-                                <div style="font-weight: 700; color: var(--color-text-primary);">${step.name}</div>
+                                <div style="font-weight: 700; color: var(--color-text-primary);">${escapeHTML(step.name)}</div>
                                 <div style="font-size: 9px; color: var(--color-text-muted);">
                                     Congestion: <strong style="color: ${statusColor};">${step.congestion}%</strong>
                                 </div>
@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 html += `
                     <div class="concession-item">
                         <div>
-                            <h4 style="font-size: var(--text-sm); font-weight: 700; color: var(--color-text-primary);">${c.name}</h4>
-                            <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: 4px;">${c.cuisine}</p>
+                            <h4 style="font-size: var(--text-sm); font-weight: 700; color: var(--color-text-primary);">${escapeHTML(c.name)}</h4>
+                            <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: 4px;">${escapeHTML(c.cuisine)}</p>
                             <div class="diet-tags">
                                 ${c.is_vegan ? '<span class="diet-tag vegan">Vegan</span>' : ''}
                                 ${c.is_vegetarian ? '<span class="diet-tag vegetarian">Veggie</span>' : ''}
@@ -275,5 +275,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (congestion >= 85) return 'var(--color-critical)';
         if (congestion >= 70) return 'var(--color-warning)';
         return 'var(--color-normal)';
+    }
+
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag)
+        );
     }
 });

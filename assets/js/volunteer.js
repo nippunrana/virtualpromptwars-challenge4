@@ -103,11 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         </span>
                         <span style="font-size: 9px; color: var(--color-text-muted);">ACTIVE TASK</span>
                     </div>
-                    <h4 style="font-size: var(--text-sm); font-weight: 700; margin-bottom: 4px;">Location: ${activeTask.zone_name}</h4>
+                    <h4 style="font-size: var(--text-sm); font-weight: 700; margin-bottom: 4px;">Location: ${escapeHTML(activeTask.zone_name)}</h4>
                     <p style="font-size: var(--text-xs); color: var(--color-text-primary); line-height: 1.4; margin-bottom: var(--space-3);">
-                        "${activeTask.description}"
+                        "${escapeHTML(activeTask.description)}"
                     </p>
-
+ 
                     ${sopSteps.length > 0 ? `
                         <div style="margin-bottom: var(--space-3);">
                             <div style="font-weight: 800; font-size: 9px; color: var(--color-gold); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.05em;">
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 ${sopSteps.map((step, idx) => `
                                     <label style="display: flex; align-items: flex-start; gap: 8px; font-size: 11px; color: var(--color-text-secondary); cursor: pointer;">
                                         <input type="checkbox" style="margin-top: 2px;">
-                                        <span>${step}</span>
+                                        <span>${escapeHTML(step)}</span>
                                     </label>
                                 `).join('')}
                             </div>
@@ -192,15 +192,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     intercomResultText.innerHTML = `
                         <div style="margin-bottom: var(--space-2);">
                             <strong style="color: var(--color-text-secondary); font-size: 10px;">ENGLISH TRANSLATION:</strong>
-                             <p style="font-size: var(--text-xs); color: var(--color-text-primary); line-height: 1.4; font-style: italic;">"${data.translation}"</p>
+                             <p style="font-size: var(--text-xs); color: var(--color-text-primary); line-height: 1.4; font-style: italic;">"${escapeHTML(data.translation)}"</p>
                         </div>
                         <div style="margin-bottom: var(--space-2);">
                             <strong style="color: var(--color-text-secondary); font-size: 10px;">STEWARD RESPONSE:</strong>
-                            <p style="font-size: var(--text-xs); color: var(--color-accent); line-height: 1.4;">${data.response_en}</p>
+                            <p style="font-size: var(--text-xs); color: var(--color-accent); line-height: 1.4;">${escapeHTML(data.response_en)}</p>
                         </div>
                         <div>
                             <strong style="color: var(--color-text-secondary); font-size: 10px;">FAN TRANSLATION (${targetLang.toUpperCase()}):</strong>
-                            <p style="font-size: var(--text-xs); color: var(--color-gold); line-height: 1.4;">${data.response_lang}</p>
+                            <p style="font-size: var(--text-xs); color: var(--color-gold); line-height: 1.4;">${escapeHTML(data.response_lang)}</p>
                         </div>
                     `;
                     intercomResultContainer.style.display = 'block';
@@ -251,5 +251,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function empty(str) {
         return (!str || str.length === 0);
+    }
+
+    function escapeHTML(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag] || tag)
+        );
     }
 });

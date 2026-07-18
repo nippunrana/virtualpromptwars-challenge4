@@ -19,7 +19,7 @@
 
   --color-text-primary: #1f2937;    /* Slate-900 */
   --color-text-secondary: #4b5563;  /* Slate-600 */
-  --color-text-muted: #9ca3af;      /* Slate-400 */
+  --color-text-muted: #5b6575;      /* Slate-500 optimized contrast */
   
   /* Accents */
   --color-gold: #c69214;      /* Refined gold for readability */
@@ -565,6 +565,8 @@ button, .btn {
 }
 .form-input:focus {
   border-color: var(--color-accent);
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
 }
 .form-input::placeholder {
   color: var(--color-text-muted);
@@ -730,4 +732,23 @@ button, .btn {
     fill: rgba(239, 68, 68, 0.25);
     stroke-width: 1.5;
   }
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Accessible Focus Ring */
+:focus-visible {
+  outline: 3px solid var(--color-gold) !important;
+  outline-offset: 2px !important;
 }

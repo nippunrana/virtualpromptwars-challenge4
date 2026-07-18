@@ -97,6 +97,17 @@ try {
     )");
     echo "- Table 'telemetry_logs' created or exists.\n";
 
+    // Create Indexes for Foreign Keys and Status fields (Performance & Efficiency Optimization)
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_vol_zone ON volunteers(current_zone_id)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_vol_status ON volunteers(status)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_inc_zone ON incidents(zone_id)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_inc_assigned ON incidents(assigned_volunteer_id)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_inc_status ON incidents(status)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_brd_zone ON broadcasts(target_zone_id)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_brd_active ON broadcasts(is_active)");
+    $db->exec("CREATE INDEX IF NOT EXISTS idx_tel_zone ON telemetry_logs(zone_id)");
+    echo "- Database performance indexes created.\n";
+
     echo "\nSeeding initial data...\n";
 
     // 1. Seed Stadium Zones
